@@ -1,20 +1,34 @@
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
+
 public class Main {
+    public static final String helloMessage = "Select mode:\n1. Type full text\n2. Type in one minute";
     public static void main(String[] args) {
-        // Main method is the entry point of the program and contains the implementation
-        // of the menu and starts the typing test.
-        Scanner sc = new Scanner(System.in);
-
         String text = Text.text;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(helloMessage);
+        int mode;
+        String line;
 
-        System.out.println("Select mode:");
-        System.out.println("1. Type full text");
-        System.out.println("2. Type in one minute");
-        int mode = sc.nextInt();
-
-        TypingTest test = new TypingTest(text, mode);
-        test.startTest();
-        sc.close();
+        while (true){
+            line = scanner.nextLine();
+            try {
+                mode = Integer.parseInt(line);
+            }catch (NumberFormatException e){
+                System.out.println("Use numbers to select speed test mode!");
+                System.out.println(helloMessage);
+                continue;
+            }
+            if (mode == 1 || mode == 2){
+                TypingTest test = new TypingTest(text, mode);
+                test.startTest();
+                break;
+            }
+            System.out.println("Input one of suggested variants!");
+            System.out.println(helloMessage);
+        }
     }
 }
